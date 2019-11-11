@@ -5,12 +5,13 @@ declare(strict_types=1);
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Ramsey\Uuid\Doctrine\UuidType;
 
 /** @var ClassMetadata $metadata */
 $builder = new ClassMetadataBuilder($metadata);
 
 $builder
-    ->createField('id', Types::INTEGER)
+    ->createField('id', UuidType::NAME)
     ->makePrimaryKey()
     ->build();
 
@@ -36,4 +37,10 @@ $builder
     ->createField('complexity', Types::INTEGER)
     ->length(1)
     ->nullable(false)
+    ->build();
+
+$builder
+    ->createField('draft', Types::BOOLEAN)
+    ->nullable(false)
+    ->option('default', 1)
     ->build();

@@ -18,6 +18,8 @@ class Recipe
 
     private $complexity;
 
+    private $draft;
+
     public function __construct(Uuid $id, string $name, int $portion, int $duration, int $complexity)
     {
 
