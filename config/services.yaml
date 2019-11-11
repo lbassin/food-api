@@ -8,8 +8,12 @@ services:
 #    App\:
 #        resource: '../src/*'
 #        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
-#
-#    App\Controller\:
-#        resource: '../src/Controller'
-#        tags: ['controller.service_arguments']
+
+    App\Infrastructure\:
+        resource: '../src/Infrastructure/*'
+        exclude: '../src/{Entity,Migrations}'
+
+    App\Infrastructure\Controller\:
+        resource: '../src/Infrastructure/Controller/*'
+        tags: ['controller.service_arguments']
 
