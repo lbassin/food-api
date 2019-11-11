@@ -5,13 +5,9 @@ services:
         autowire: true
         autoconfigure: true
 
-#    App\:
-#        resource: '../src/*'
-#        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
-
-    App\Infrastructure\:
-        resource: '../src/Infrastructure/*'
-        exclude: '../src/{Entity,Migrations}'
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
     App\Infrastructure\Controller\:
         resource: '../src/Infrastructure/Controller/*'

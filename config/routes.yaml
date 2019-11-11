@@ -1,3 +1,6 @@
 root:
     path: /
     controller: App\Infrastructure\Controller\RootAction::handle
+
+recipes:
+    resource: routes/recipes.yml

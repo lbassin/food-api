@@ -1,0 +1,4 @@
+recipes:
+    path: /recipes
+    methods: GET
+    controller: App\Infrastructure\Controller\Recipes\ReadAllAction::handle
