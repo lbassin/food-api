@@ -5,23 +5,28 @@ declare(strict_types=1);
 namespace App\Infrastructure\Controller\Recipes;
 
 use App\Domain\Repository\RecipeRepositoryInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ReadAllAction
 {
 
     private $recipeRepository;
+    private $serializer;
 
-    public function __construct(RecipeRepositoryInterface $recipeRepository)
+    public function __construct(RecipeRepositoryInterface $recipeRepository, SerializerInterface $serializer)
     {
         $this->recipeRepository = $recipeRepository;
+        $this->serializer = $serializer;
     }
 
     public function handle(): Response
     {
-        $recipes = $this->recipeRepository->getAll();
-        print_r($recipes);
+        $recipes = $this->recipeRepository->getAllNoneDraft();
 
-        return new Response('Recipes');
+        $data = $this->serializer->serialize($recipes, 'json');
+
+        return new JsonResponse($data, Response::HTTP_OK, [], true);
     }
 }

@@ -6,5 +6,5 @@ namespace App\Domain\Repository;
 
 Interface RecipeRepositoryInterface
 {
-    public function getAll(): array;
+    public function getAllNoneDraft(): array;
 }
