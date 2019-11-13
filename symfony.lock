@@ -263,6 +263,9 @@
     "symfony/stopwatch": {
         "version": "v4.3.6"
     },
+    "symfony/var-dumper": {
+        "version": "v4.3.7"
+    },
     "symfony/var-exporter": {
         "version": "v4.3.6"
     },
