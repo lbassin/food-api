@@ -23,10 +23,10 @@ class RecipeNormalizer implements NormalizerInterface
     {
         return [
             'id' => $recipe->getId(),
-            'name' => $recipe->getName(),
-            'portion' => $recipe->getPortion(),
-            'duration' => $recipe->getDurationInMinutes(),
-            'complexity' => $recipe->getComplexity(),
+            'name' => $recipe->getName()->getValue(),
+            'portion' => $recipe->getPortion()->getValue(),
+            'duration' => $recipe->getDurationInMinutes()->getMinutes(),
+            'complexity' => $recipe->getComplexity()->getValue(),
             'steps' => $this->normalizeSteps($recipe->getSteps()),
         ];
     }

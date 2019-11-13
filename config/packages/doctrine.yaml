@@ -9,6 +9,13 @@ doctrine:
             collate: utf8mb4_unicode_ci
 
         url: '%env(resolve:DATABASE_URL)%'
+
+        types:
+            recipe_name: App\Infrastructure\DBAL\Value\RecipeName
+            portion: App\Infrastructure\DBAL\Value\Portion
+            duration: App\Infrastructure\DBAL\Value\Duration
+            complexity: App\Infrastructure\DBAL\Value\Complexity
+
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore

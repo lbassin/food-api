@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\Exception\RecipeAlreadyPublishedException;
+use App\Domain\Value\Complexity;
+use App\Domain\Value\Duration;
+use App\Domain\Value\Portion;
+use App\Domain\Value\RecipeName;
 use Ramsey\Uuid\UuidInterface;
 
 class Recipe
@@ -23,9 +28,19 @@ class Recipe
 
     private $draft;
 
-    public function __construct(UuidInterface $id, string $name, int $portion, int $duration, int $complexity)
-    {
-
+    public function __construct(
+        UuidInterface $id,
+        RecipeName $name,
+        Portion $portion,
+        Duration $duration,
+        Complexity $complexity
+    ) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->portion = $portion;
+        $this->duration = $duration;
+        $this->complexity = $complexity;
+        $this->draft = true;
     }
 
     public function getId(): UuidInterface
@@ -33,22 +48,22 @@ class Recipe
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): RecipeName
     {
         return $this->name;
     }
 
-    public function getPortion(): int
+    public function getPortion(): Portion
     {
         return $this->portion;
     }
 
-    public function getDurationInMinutes(): int
+    public function getDurationInMinutes(): Duration
     {
         return $this->duration;
     }
 
-    public function getComplexity(): int
+    public function getComplexity(): Complexity
     {
         return $this->complexity;
     }
@@ -56,5 +71,14 @@ class Recipe
     public function getSteps(): array
     {
         return $this->steps->toArray();
+    }
+
+    public function publish(): void
+    {
+        if ($this->draft === false) {
+            throw new RecipeAlreadyPublishedException($this);
+        }
+
+        $this->draft = false;
     }
 }

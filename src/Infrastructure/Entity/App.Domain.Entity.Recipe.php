@@ -33,25 +33,25 @@ $builder
     ->build();
 
 $builder
-    ->createField('name', Types::STRING)
+    ->createField('name', \App\Infrastructure\DBAL\Value\RecipeName::NAME)
     ->length(255)
     ->nullable(false)
     ->build();
 
 $builder
-    ->createField('portion', Types::INTEGER)
+    ->createField('portion', \App\Infrastructure\DBAL\Value\Portion::NAME)
     ->length(1)
     ->nullable(false)
     ->build();
 
 $builder
-    ->createField('duration', Types::INTEGER)
+    ->createField('duration', \App\Infrastructure\DBAL\Value\Duration::NAME)
     ->length(3)
     ->nullable(false)
     ->build();
 
 $builder
-    ->createField('complexity', Types::INTEGER)
+    ->createField('complexity', \App\Infrastructure\DBAL\Value\Complexity::NAME)
     ->length(1)
     ->nullable(false)
     ->build();
