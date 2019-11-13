@@ -32,3 +32,8 @@ components:
           description: 'Complexity between 0 and 5'
           type: integer
       type: object
+    RecipeStep:
+      properties:
+        instruction:
+          type: string
+      type: object

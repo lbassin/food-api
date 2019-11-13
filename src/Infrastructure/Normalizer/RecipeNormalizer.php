@@ -9,6 +9,13 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class RecipeNormalizer implements NormalizerInterface
 {
+    private $recipeStepNormalizer;
+
+    public function __construct(RecipeStepNormalizer $recipeStepNormalizer)
+    {
+        $this->recipeStepNormalizer = $recipeStepNormalizer;
+    }
+
     /**
      * @param $recipe Recipe
      */
@@ -20,11 +27,21 @@ class RecipeNormalizer implements NormalizerInterface
             'portion' => $recipe->getPortion(),
             'duration' => $recipe->getDurationInMinutes(),
             'complexity' => $recipe->getComplexity(),
+            'steps' => $this->normalizeSteps($recipe->getSteps()),
         ];
     }
 
     public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof Recipe && $format === 'json';
+    }
+
+    private function normalizeSteps(array $steps): array
+    {
+        $recipeStepNormalizer = $this->recipeStepNormalizer;
+
+        return array_map(function ($step) use ($recipeStepNormalizer) {
+            return $recipeStepNormalizer->normalize($step);
+        }, (array) $steps);
     }
 }

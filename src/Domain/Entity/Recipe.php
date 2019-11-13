@@ -18,6 +18,9 @@ class Recipe
 
     private $complexity;
 
+    /** @var \Doctrine\Common\Collections\ArrayCollection $steps */
+    private $steps;
+
     private $draft;
 
     public function __construct(UuidInterface $id, string $name, int $portion, int $duration, int $complexity)
@@ -48,5 +51,10 @@ class Recipe
     public function getComplexity(): int
     {
         return $this->complexity;
+    }
+
+    public function getSteps(): array
+    {
+        return $this->steps->toArray();
     }
 }

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Domain\Entity\RecipeStep;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -12,19 +13,16 @@ use Ramsey\Uuid\Doctrine\UuidType;
 $builder = new ClassMetadataBuilder($metadata);
 
 /**
- * @OA\Components(
- *      @OA\Schema(
- *          schema="Recipe",
- *          type="Recipe",
- *          type="object",
- *          properties={
- *              @OA\Property(property="id", type="uuid"),
- *              @OA\Property(property="name", type="string"),
- *              @OA\Property(property="portion", type="integer", description="Number of people the recipe is made for"),
- *              @OA\Property(property="duration", type="integer", description="Duration in minute"),
- *              @OA\Property(property="complexity", type="integer", description="Complexity between 0 and 5")
- *          }
- *     )
+ * @OA\Schema(
+ *      schema="Recipe",
+ *      type="object",
+ *      properties={
+ *          @OA\Property(property="id", type="uuid"),
+ *          @OA\Property(property="name", type="string"),
+ *          @OA\Property(property="portion", type="integer", description="Number of people the recipe is made for"),
+ *          @OA\Property(property="duration", type="integer", description="Duration in minute"),
+ *          @OA\Property(property="complexity", type="integer", description="Complexity between 0 and 5")
+ *      }
  * )
  */
 
@@ -56,6 +54,12 @@ $builder
     ->createField('complexity', Types::INTEGER)
     ->length(1)
     ->nullable(false)
+    ->build();
+
+$builder
+    ->createOneToMany('steps', RecipeStep::class)
+    ->setOrderBy(['position' => 'ASC'])
+    ->mappedBy('recipe')
     ->build();
 
 $builder
