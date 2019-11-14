@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Repository;
 
 use App\Domain\Entity\Recipe;
+use App\Domain\Exception\RecipeNotFoundException;
 use App\Domain\Repository\RecipeRepositoryInterface;
 use App\Domain\Value\Complexity;
 use App\Domain\Value\Duration;
@@ -48,6 +49,21 @@ class RecipeRepository implements RecipeRepositoryInterface
     {
         $this->entityManager->persist($recipe);
         $this->entityManager->flush();
+    }
+
+    public function getPublishedRecipeById(UuidInterface $id): Recipe
+    {
+        /** @var Recipe|null $recipe */
+        $recipe = $this->repository->findOneBy([
+            'id' => $id->toString(),
+            'draft' => false,
+        ]);
+
+        if (!$recipe) {
+            throw new RecipeNotFoundException($id);
+        }
+
+        return $recipe;
     }
 
     private function nextIdentity(): UuidInterface

@@ -1,4 +1,9 @@
-recipes:
+recipes_all:
     path: /recipes
     methods: GET
     controller: App\Infrastructure\Controller\Recipes\ReadAllAction::handle
+
+recipes_one:
+    path: /recipes/{id<^[a-zA-Z0-9-]{36}$>}
+    methods: GET
+    controller: App\Infrastructure\Controller\Recipes\ReadOneAction::handle

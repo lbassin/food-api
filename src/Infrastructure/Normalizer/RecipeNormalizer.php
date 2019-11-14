@@ -9,6 +9,8 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class RecipeNormalizer implements NormalizerInterface
 {
+    const FIELD_STEP = 'field_step';
+
     private $recipeStepNormalizer;
 
     public function __construct(RecipeStepNormalizer $recipeStepNormalizer)
@@ -21,14 +23,15 @@ class RecipeNormalizer implements NormalizerInterface
      */
     public function normalize($recipe, $format = null, array $context = []): array
     {
+        $steps = $this->normalizeSteps($recipe, $context);
+
         return [
-            'id' => $recipe->getId(),
-            'name' => $recipe->getName()->getValue(),
-            'portion' => $recipe->getPortion()->getValue(),
-            'duration' => $recipe->getDurationInMinutes()->getMinutes(),
-            'complexity' => $recipe->getComplexity()->getValue(),
-            'steps' => $this->normalizeSteps($recipe->getSteps()),
-        ];
+                'id' => $recipe->getId(),
+                'name' => $recipe->getName()->getValue(),
+                'portion' => $recipe->getPortion()->getValue(),
+                'duration' => $recipe->getDurationInMinutes()->getMinutes(),
+                'complexity' => $recipe->getComplexity()->getValue(),
+            ] + $steps;
     }
 
     public function supportsNormalization($data, $format = null): bool
@@ -36,12 +39,18 @@ class RecipeNormalizer implements NormalizerInterface
         return $data instanceof Recipe && $format === 'json';
     }
 
-    private function normalizeSteps(array $steps): array
+    private function normalizeSteps(Recipe $recipe, array $context): array
     {
+        if (!isset($context[self::FIELD_STEP]) || $context[self::FIELD_STEP] !== true) {
+            return [];
+        }
+
         $recipeStepNormalizer = $this->recipeStepNormalizer;
 
-        return array_map(function ($step) use ($recipeStepNormalizer) {
-            return $recipeStepNormalizer->normalize($step);
-        }, (array) $steps);
+        return [
+            'steps' => array_map(function ($step) use ($recipeStepNormalizer) {
+                return $recipeStepNormalizer->normalize($step);
+            }, $recipe->getSteps()),
+        ];
     }
 }

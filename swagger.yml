@@ -14,6 +14,13 @@ paths:
       responses:
         '200':
           description: success
+  '/recipes/{id}':
+    get:
+      summary: 'Get one recipe'
+      operationId: 'App\Infrastructure\Controller\Recipes\ReadOneAction::__construct'
+      responses:
+        '200':
+          description: success
 components:
   schemas:
     Recipe:
