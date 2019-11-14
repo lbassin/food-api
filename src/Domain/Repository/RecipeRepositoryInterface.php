@@ -11,8 +11,6 @@ Interface RecipeRepositoryInterface
 {
     public function createDraft(string $name, int $portion, int $duration, int $complexity): Recipe;
 
-    public function publish(Recipe $recipe): void;
-
     public function getAllNoneDraft(): array;
 
     public function save(Recipe $recipe): void;

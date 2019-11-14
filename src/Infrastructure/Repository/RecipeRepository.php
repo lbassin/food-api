@@ -37,14 +37,6 @@ class RecipeRepository implements RecipeRepositoryInterface
         );
     }
 
-    public function publish(Recipe $recipe): void
-    {
-        $recipe->publish();
-
-        $this->entityManager->persist($recipe);
-        $this->entityManager->flush();
-    }
-
     public function getAllNoneDraft(): array
     {
         return $this->repository->findBy([

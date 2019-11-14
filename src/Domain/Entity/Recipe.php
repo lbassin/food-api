@@ -9,6 +9,7 @@ use App\Domain\Value\Complexity;
 use App\Domain\Value\Duration;
 use App\Domain\Value\Portion;
 use App\Domain\Value\RecipeName;
+use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\UuidInterface;
 
 class Recipe
@@ -40,6 +41,7 @@ class Recipe
         $this->portion = $portion;
         $this->duration = $duration;
         $this->complexity = $complexity;
+        $this->steps = new ArrayCollection();
         $this->draft = true;
     }
 
@@ -80,5 +82,10 @@ class Recipe
         }
 
         $this->draft = false;
+    }
+
+    public function addStep($step): void
+    {
+        $this->steps[] = $step;
     }
 }

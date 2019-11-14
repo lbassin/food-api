@@ -16,15 +16,21 @@ class RecipeStep
 
     private $instruction;
 
-    public function __construct(UuidInterface $id, int $position, string $instruction)
+    public function __construct(UuidInterface $id, int $position, string $instruction, Recipe $recipe)
     {
         $this->id = $id;
         $this->position = $position;
         $this->instruction = $instruction;
+        $this->recipe = $recipe;
     }
 
     public function getInstruction(): string
     {
         return $this->instruction;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
     }
 }
