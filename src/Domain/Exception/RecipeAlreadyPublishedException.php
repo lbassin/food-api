@@ -13,6 +13,6 @@ class RecipeAlreadyPublishedException extends \RuntimeException
     {
         $message = sprintf('Recipe already published (%s)', $recipe->getId());
 
-        parent::__construct($message, 1, $previous);
+        parent::__construct($message, ExceptionTypes::DOMAIN, $previous);
     }
 }

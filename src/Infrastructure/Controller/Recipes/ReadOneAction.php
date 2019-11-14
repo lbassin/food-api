@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Controller\Recipes;
 
+use App\Domain\Exception\ExceptionTypes;
 use App\Domain\Repository\RecipeRepositoryInterface;
 use App\Infrastructure\Normalizer\RecipeNormalizer;
 use OpenApi\Annotations as OA;
+use Ramsey\Uuid\Exception\InvalidUuidStringException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +37,11 @@ class ReadOneAction
 
     public function handle(Request $request): Response
     {
-        $id = Uuid::fromString($request->attributes->get('id'));
+        try {
+            $id = Uuid::fromString($request->attributes->get('id'));
+        } catch (InvalidUuidStringException $exception) {
+            throw new \RuntimeException($exception->getMessage(), ExceptionTypes::DATA_PROVIDED_ERROR, $exception);
+        }
 
         $recipe = $this->recipeRepository->getPublishedRecipeById($id);
 

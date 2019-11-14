@@ -13,6 +13,6 @@ class RecipeNotFoundException extends \RuntimeException
     {
         $message = sprintf('Recipe not found (%s)', $uuid);
 
-        parent::__construct($message, 1, $previous);
+        parent::__construct($message, ExceptionTypes::NOT_FOUND, $previous);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Exception\Value;
 
+use App\Domain\Exception\ExceptionTypes;
 use Throwable;
 
 class PortionQuantityNotValidException extends \RuntimeException
@@ -12,6 +13,6 @@ class PortionQuantityNotValidException extends \RuntimeException
     {
         $message = sprintf('Portion should be a number between 1 and 10, %d provided', $portion);
 
-        parent::__construct($message, 1, $previous);
+        parent::__construct($message, ExceptionTypes::DOMAIN, $previous);
     }
 }

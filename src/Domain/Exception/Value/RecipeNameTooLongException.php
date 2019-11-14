@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Exception\Value;
 
+use App\Domain\Exception\ExceptionTypes;
 use Throwable;
 
 class RecipeNameTooLongException extends \RuntimeException
@@ -12,6 +13,6 @@ class RecipeNameTooLongException extends \RuntimeException
     {
         $message = sprintf('Recipe name too long (%s)', $name);
 
-        parent::__construct($message, 1, $previous);
+        parent::__construct($message, ExceptionTypes::DOMAIN, $previous);
     }
 }
