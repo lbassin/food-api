@@ -42,6 +42,12 @@ paths:
                   $ref: '#/components/schemas/Recipe_Details'
 components:
   schemas:
+    Ingredient:
+      title: Ingredient
+      properties:
+        name:
+          type: string
+      type: object
     Recipe_List:
       title: 'Recipe (List)'
       properties:

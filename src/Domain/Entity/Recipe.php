@@ -24,7 +24,7 @@ class Recipe
 
     private $complexity;
 
-    /** @var \Doctrine\Common\Collections\ArrayCollection $steps */
+    /** @var ArrayCollection $steps */
     private $steps;
 
     private $draft;
