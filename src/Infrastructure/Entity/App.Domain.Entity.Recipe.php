@@ -14,14 +14,27 @@ $builder = new ClassMetadataBuilder($metadata);
 
 /**
  * @OA\Schema(
- *      schema="Recipe",
- *      type="object",
+ *      schema="Recipe_List",
+ *      title="Recipe (List)",
  *      properties={
- *          @OA\Property(property="id", type="uuid"),
+ *          @OA\Property(property="id", type="string", format="uuid"),
  *          @OA\Property(property="name", type="string"),
  *          @OA\Property(property="portion", type="integer", description="Number of people the recipe is made for"),
  *          @OA\Property(property="duration", type="integer", description="Duration in minute"),
- *          @OA\Property(property="complexity", type="integer", description="Complexity between 0 and 5")
+ *          @OA\Property(property="complexity", type="integer", description="Complexity between 0 and 5"),
+ *      }
+ * )
+ *
+ * @OA\Schema(
+ *      schema="Recipe_Details",
+ *      title="Recipe (Details)",
+ *      properties={
+ *          @OA\Property(property="id", type="string", format="uuid"),
+ *          @OA\Property(property="name", type="string"),
+ *          @OA\Property(property="portion", type="integer", description="Number of people the recipe is made for"),
+ *          @OA\Property(property="duration", type="integer", description="Duration in minute"),
+ *          @OA\Property(property="complexity", type="integer", description="Complexity between 0 and 5"),
+ *          @OA\Property(property="steps", @OA\Items(title="steps", ref="#/components/schemas/RecipeStep"))
  *      }
  * )
  */

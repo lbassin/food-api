@@ -14,19 +14,40 @@ paths:
       responses:
         '200':
           description: success
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Recipe_List'
   '/recipes/{id}':
     get:
       summary: 'Get one recipe'
       operationId: 'App\Infrastructure\Controller\Recipes\ReadOneAction::__construct'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID of the recipe'
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         '200':
           description: success
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Recipe_Details'
 components:
   schemas:
-    Recipe:
+    Recipe_List:
+      title: 'Recipe (List)'
       properties:
         id:
-          type: uuid
+          type: string
+          format: uuid
         name:
           type: string
         portion:
@@ -39,7 +60,30 @@ components:
           description: 'Complexity between 0 and 5'
           type: integer
       type: object
+    Recipe_Details:
+      title: 'Recipe (Details)'
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        portion:
+          description: 'Number of people the recipe is made for'
+          type: integer
+        duration:
+          description: 'Duration in minute'
+          type: integer
+        complexity:
+          description: 'Complexity between 0 and 5'
+          type: integer
+        steps:
+          items:
+            title: steps
+            $ref: '#/components/schemas/RecipeStep'
+      type: object
     RecipeStep:
+      title: RecipeStep
       properties:
         instruction:
           type: string

@@ -15,7 +15,7 @@ $builder = new ClassMetadataBuilder($metadata);
 /**
  * @OA\Schema(
  *      schema="RecipeStep",
- *      type="object",
+ *      title="RecipeStep",
  *      properties={
  *          @OA\Property(property="instruction", type="string")
  *      }

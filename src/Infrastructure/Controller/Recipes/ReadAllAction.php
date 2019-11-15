@@ -21,7 +21,13 @@ class ReadAllAction
      * @OA\Get(
      *      path="/recipes",
      *      summary="Get the list of the validated recipes",
-     *      @OA\Response(response="200", description="success", @OA\Schema(ref="#components/schemas/Recipe"))
+     *      @OA\Response(
+     *          response="200",
+     *          description="success",
+     *          @OA\JsonContent(
+     *              @OA\Items(ref="#/components/schemas/Recipe_List")
+     *          )
+     *      )
      * )
      */
     public function __construct(RecipeRepositoryInterface $recipeRepository, SerializerInterface $serializer)

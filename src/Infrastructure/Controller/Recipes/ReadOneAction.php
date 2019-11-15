@@ -26,7 +26,23 @@ class ReadOneAction
      * @OA\Get(
      *      path="/recipes/{id}",
      *      summary="Get one recipe",
-     *      @OA\Response(response="200", description="success")
+     *      @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          description="ID of the recipe",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string",
+     *              format="uuid"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          description="success",
+     *          @OA\JsonContent(
+     *              @OA\Items(ref="#/components/schemas/Recipe_Details")
+     *          )
+     *      )
      * )
      */
     public function __construct(RecipeRepositoryInterface $recipeRepository, SerializerInterface $serializer)
