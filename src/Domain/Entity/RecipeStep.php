@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\UuidInterface;
 
 class RecipeStep
@@ -15,6 +16,9 @@ class RecipeStep
     private $position;
 
     private $instruction;
+
+    /** @var ArrayCollection */
+    private $ingredients;
 
     public function __construct(UuidInterface $id, int $position, string $instruction, Recipe $recipe)
     {
@@ -32,5 +36,10 @@ class RecipeStep
     public function getPosition(): int
     {
         return $this->position;
+    }
+
+    public function getIngredients(): array
+    {
+        return $this->ingredients->toArray();
     }
 }
