@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Subscribers;
 
 use App\Domain\Exception\ExceptionTypes;
+use Doctrine\DBAL\DBALException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,9 +36,14 @@ class ExceptionSubscriber implements EventSubscriberInterface
         $responseCode = $this->getResponseCode($exception);
 
         $devData = $this->getDevData($exception);
+        $overrideSensitiveData = $this->overrideSensitiveData($exception);
 
         $response = new JsonResponse (
-            ['message' => $exception->getMessage()] + $devData,
+            array_merge(
+                ['message' => $exception->getMessage()],
+                $devData,
+                $overrideSensitiveData
+            ),
             $responseCode
         );
 
@@ -62,9 +68,22 @@ class ExceptionSubscriber implements EventSubscriberInterface
         return $responseCode ?? Response::HTTP_INTERNAL_SERVER_ERROR;
     }
 
+    private function overrideSensitiveData(\Throwable $exception)
+    {
+        if ($this->isDevModeEnabled()) {
+            return [];
+        }
+
+        if ($exception instanceof DBALException) {
+            return ['message' => 'SQL Error'];
+        }
+
+        return [];
+    }
+
     private function getDevData(\Throwable $exception): array
     {
-        if ($this->applicationEnvName !== 'dev') {
+        if (!$this->isDevModeEnabled()) {
             return [];
         }
 
@@ -81,5 +100,10 @@ class ExceptionSubscriber implements EventSubscriberInterface
                 'code' => $exception->getPrevious()->getCode(),
             ],
         ];
+    }
+
+    private function isDevModeEnabled(): bool
+    {
+        return $this->applicationEnvName === 'dev';
     }
 }
