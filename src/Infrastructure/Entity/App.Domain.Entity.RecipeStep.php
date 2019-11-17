@@ -44,6 +44,10 @@ $builder
     ->nullable(false)
     ->build();
 
+$builder
+    ->createOneToMany('ingredients', \App\Domain\Entity\IngredientQuantity::class)
+    ->mappedBy('step')
+    ->build();
 
 $builder->addUniqueConstraint(['recipe_id', 'position'], 'RECIPE_STEP_POSITION_UNIQUE');
 

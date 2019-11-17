@@ -20,6 +20,15 @@ class IngredientFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $ingredient = $this->ingredientRepository->createIngredient('Tomate');
+        $this->setReference('ingredient_tomato', $ingredient);
+        $this->ingredientRepository->save($ingredient);
+
+        $ingredient = $this->ingredientRepository->createIngredient('Salade');
+        $this->setReference('ingredient_salad', $ingredient);
+        $this->ingredientRepository->save($ingredient);
+
+        $ingredient = $this->ingredientRepository->createIngredient('Oignon');
+        $this->setReference('ingredient_onion', $ingredient);
         $this->ingredientRepository->save($ingredient);
     }
 }

@@ -18,4 +18,9 @@ class Ingredient
         $this->id = $id;
         $this->name = $name;
     }
+
+    public function getName(): IngredientName
+    {
+        return $this->name;
+    }
 }

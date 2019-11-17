@@ -23,4 +23,14 @@ class IngredientQuantity
         $this->step = $step;
         $this->quantity = $quantity;
     }
+
+    public function getIngredient(): Ingredient
+    {
+        return $this->ingredient;
+    }
+
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
 }

@@ -26,6 +26,7 @@ class RecipeStep
         $this->position = $position;
         $this->instruction = $instruction;
         $this->recipe = $recipe;
+        $this->ingredients = new ArrayCollection();
     }
 
     public function getInstruction(): string
