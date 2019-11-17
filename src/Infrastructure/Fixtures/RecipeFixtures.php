@@ -8,6 +8,7 @@ use App\Domain\Repository\IngredientQuantityRepositoryInterface;
 use App\Domain\Repository\IngredientRepositoryInterface;
 use App\Domain\Repository\RecipeRepositoryInterface;
 use App\Domain\Repository\RecipeStepRepositoryInterface;
+use App\Domain\Value\Quantity\UnitQuantity;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -40,9 +41,9 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
 
         $step = $this->recipeStepRepository->createStepForRecipe($recipe, 'Buy things');
 
-        $this->ingredientQuantityRepository->addIngredientToStep($step, $tomato, 2);
-        $this->ingredientQuantityRepository->addIngredientToStep($step, $salad, 1);
-        $this->ingredientQuantityRepository->addIngredientToStep($step, $onion, 125);
+        $this->ingredientQuantityRepository->addIngredientToStep($step, $tomato, new UnitQuantity(2));
+        $this->ingredientQuantityRepository->addIngredientToStep($step, $salad, new UnitQuantity(1));
+        $this->ingredientQuantityRepository->addIngredientToStep($step, $onion, new UnitQuantity(3));
 
         $recipe->addStep($step);
 

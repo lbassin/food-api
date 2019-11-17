@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\Value\Quantity\Quantity;
 use Ramsey\Uuid\UuidInterface;
 
 class IngredientQuantity
@@ -16,7 +17,7 @@ class IngredientQuantity
 
     private $quantity;
 
-    public function __construct(UuidInterface $id, Ingredient $ingredient, RecipeStep $step, int $quantity)
+    public function __construct(UuidInterface $id, Ingredient $ingredient, RecipeStep $step, Quantity $quantity)
     {
         $this->id = $id;
         $this->ingredient = $ingredient;
@@ -29,7 +30,7 @@ class IngredientQuantity
         return $this->ingredient;
     }
 
-    public function getQuantity(): int
+    public function getQuantity(): Quantity
     {
         return $this->quantity;
     }

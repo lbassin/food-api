@@ -16,7 +16,10 @@ class IngredientQuantityNormalizer implements NormalizerInterface
     {
         return [
             'name' => $ingredientQuantity->getIngredient()->getName()->getValue(),
-            'quantity' => $ingredientQuantity->getQuantity()
+            'quantity' => [
+                'type' => $ingredientQuantity->getQuantity()->getType(),
+                'value' => $ingredientQuantity->getQuantity()->getValueAsString(),
+            ],
         ];
     }
 

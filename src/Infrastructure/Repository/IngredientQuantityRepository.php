@@ -8,6 +8,7 @@ use App\Domain\Entity\Ingredient;
 use App\Domain\Entity\IngredientQuantity;
 use App\Domain\Entity\RecipeStep;
 use App\Domain\Repository\IngredientQuantityRepositoryInterface;
+use App\Domain\Value\Quantity\Quantity;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -24,13 +25,13 @@ class IngredientQuantityRepository implements IngredientQuantityRepositoryInterf
         $this->repository = $entityManager->getRepository(Ingredient::class);
     }
 
-    public function addIngredientToStep(RecipeStep $step, Ingredient $ingredient, int $unit)
+    public function addIngredientToStep(RecipeStep $step, Ingredient $ingredient, Quantity $quantity)
     {
         $ingredientQuantity = new IngredientQuantity(
             $this->nextIdentity(),
             $ingredient,
             $step,
-            $unit
+            $quantity
         );
 
         $this->entityManager->persist($ingredientQuantity);

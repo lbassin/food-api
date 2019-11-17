@@ -29,6 +29,9 @@ final class Version20191113045213 extends AbstractMigration
         $this->addSql('CREATE TABLE recipe_step (id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\', recipe_id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\', position INT NOT NULL, instruction VARCHAR(255) NOT NULL, INDEX IDX_3CA2A4E359D8A214 (recipe_id), UNIQUE INDEX RECIPE_STEP_POSITION_UNIQUE (recipe_id, position), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE recipe_step ADD CONSTRAINT FK_3CA2A4E359D8A214 FOREIGN KEY (recipe_id) REFERENCES recipe (id)');
         $this->addSql('CREATE TABLE ingredient (id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\', name VARCHAR(255) NOT NULL COMMENT \'(DC2Type:ingredient_name)\', PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE ingredient_quantity (id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\', ingredient_id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\', step_id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\', quantity VARCHAR(255) NOT NULL COMMENT \'(DC2Type:quantity)\', INDEX IDX_EDF546B8933FE08C (ingredient_id), INDEX IDX_EDF546B873B21E9C (step_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE ingredient_quantity ADD CONSTRAINT FK_EDF546B8933FE08C FOREIGN KEY (ingredient_id) REFERENCES ingredient (id)');
+        $this->addSql('ALTER TABLE ingredient_quantity ADD CONSTRAINT FK_EDF546B873B21E9C FOREIGN KEY (step_id) REFERENCES recipe_step (id)');
     }
 
     /**
@@ -41,6 +44,7 @@ final class Version20191113045213 extends AbstractMigration
             'Migration can only be executed safely on \'mysql\'.'
         );
 
+        $this->addSql('DROP TABLE ingredient_quantity');
         $this->addSql('DROP TABLE ingredient');
         $this->addSql('ALTER TABLE recipe_step DROP FOREIGN KEY FK_3CA2A4E359D8A214');
         $this->addSql('DROP TABLE recipe');

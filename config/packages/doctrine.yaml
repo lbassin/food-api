@@ -16,6 +16,7 @@ doctrine:
             duration: App\Infrastructure\DBAL\Value\Duration
             complexity: App\Infrastructure\DBAL\Value\Complexity
             ingredient_name: App\Infrastructure\DBAL\Value\IngredientName
+            quantity: App\Infrastructure\DBAL\Value\Quantity
 
     orm:
         auto_generate_proxy_classes: true

@@ -26,6 +26,6 @@ $builder
     ->build();
 
 $builder
-    ->createField('quantity', \Doctrine\DBAL\Types\Types::INTEGER)
+    ->createField('quantity', \App\Infrastructure\DBAL\Value\Quantity::NAME)
     ->nullable(false)
     ->build();
