@@ -35,25 +35,55 @@ class RecipeFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
+        $this->createBuritosRecipe();
+        $this->createSushisRecipe();
+        $this->createPizzaRecipe();
+    }
+
+    private function createBuritosRecipe(): void
+    {
         $recipe = $this->recipeRepository->createDraft('Buritos', 2, 25, 1);
 
         [$tomato, $salad, $onion] = $this->getIngredients();
 
         $step = $this->recipeStepRepository->createStepForRecipe($recipe, 'Buy things');
-
         $this->ingredientQuantityRepository->addIngredientToStep($step, $tomato, new UnitQuantity(2));
+        $recipe->addStep($step);
+
+        $step = $this->recipeStepRepository->createStepForRecipe($recipe, 'Cook it');
         $this->ingredientQuantityRepository->addIngredientToStep($step, $salad, new UnitQuantity(1));
         $this->ingredientQuantityRepository->addIngredientToStep($step, $onion, new UnitQuantity(3));
-
         $recipe->addStep($step);
 
         $recipe->publish();
-
         $this->recipeRepository->save($recipe);
+    }
 
-        // ---
-
+    private function createSushisRecipe(): void
+    {
         $recipe = $this->recipeRepository->createDraft('Sushis', 2, 45, 3);
+        $this->recipeRepository->save($recipe);
+    }
+
+    private function createPizzaRecipe(): void
+    {
+        $recipe = $this->recipeRepository->createDraft('Pizza', 2, 25, 1);
+
+        [$tomato, $salad, $onion] = $this->getIngredients();
+
+        $step = $this->recipeStepRepository->createStepForRecipe($recipe, 'Buy things');
+        $this->ingredientQuantityRepository->addIngredientToStep($step, $tomato, new UnitQuantity(2));
+        $recipe->addStep($step);
+
+        $step = $this->recipeStepRepository->createStepForRecipe($recipe, 'Cook it');
+        $this->ingredientQuantityRepository->addIngredientToStep($step, $salad, new UnitQuantity(1));
+        $this->ingredientQuantityRepository->addIngredientToStep($step, $onion, new UnitQuantity(3));
+        $recipe->addStep($step);
+
+        $step = $this->recipeStepRepository->createStepForRecipe($recipe, 'Eat it');
+        $recipe->addStep($step);
+
+        $recipe->publish();
         $this->recipeRepository->save($recipe);
     }
 
