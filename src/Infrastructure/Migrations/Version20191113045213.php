@@ -32,6 +32,7 @@ final class Version20191113045213 extends AbstractMigration
         $this->addSql('CREATE TABLE ingredient_quantity (id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\', ingredient_id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\', step_id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\', quantity VARCHAR(255) NOT NULL COMMENT \'(DC2Type:quantity)\', INDEX IDX_EDF546B8933FE08C (ingredient_id), INDEX IDX_EDF546B873B21E9C (step_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE ingredient_quantity ADD CONSTRAINT FK_EDF546B8933FE08C FOREIGN KEY (ingredient_id) REFERENCES ingredient (id)');
         $this->addSql('ALTER TABLE ingredient_quantity ADD CONSTRAINT FK_EDF546B873B21E9C FOREIGN KEY (step_id) REFERENCES recipe_step (id)');
+        $this->addSql('CREATE TABLE user (id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\', email VARCHAR(255) NOT NULL COMMENT \'(DC2Type:email)\', password VARCHAR(255) NOT NULL COMMENT \'(DC2Type:password)\', created_at DATE NOT NULL COMMENT \'(DC2Type:date_immutable)\', PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
     }
 
     /**
@@ -44,6 +45,7 @@ final class Version20191113045213 extends AbstractMigration
             'Migration can only be executed safely on \'mysql\'.'
         );
 
+        $this->addSql('DROP TABLE user');
         $this->addSql('DROP TABLE ingredient_quantity');
         $this->addSql('DROP TABLE ingredient');
         $this->addSql('ALTER TABLE recipe_step DROP FOREIGN KEY FK_3CA2A4E359D8A214');

@@ -17,6 +17,8 @@ doctrine:
             complexity: App\Infrastructure\DBAL\Value\Complexity
             ingredient_name: App\Infrastructure\DBAL\Value\IngredientName
             quantity: App\Infrastructure\DBAL\Value\Quantity
+            email: App\Infrastructure\DBAL\Value\User\Email
+            password: App\Infrastructure\DBAL\Value\User\Password
 
     orm:
         auto_generate_proxy_classes: true
