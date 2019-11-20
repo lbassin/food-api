@@ -4,7 +4,25 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
-interface User
-{
+use App\Domain\Value\User\Email;
+use App\Domain\Value\User\Password;
+use Ramsey\Uuid\UuidInterface;
 
+abstract class User
+{
+    protected $id;
+
+    protected $email;
+
+    protected $password;
+
+    protected $createdAt;
+
+    public function __construct(UuidInterface $id, Email $email, Password $password)
+    {
+        $this->id = $id;
+        $this->email = $email;
+        $this->password = $password;
+        $this->createdAt = new \DateTimeImmutable();
+    }
 }
