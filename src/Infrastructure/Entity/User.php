@@ -4,10 +4,29 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Entity;
 
+use App\Domain\Value\User\Email;
+use App\Domain\Value\User\Password;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class User extends \App\Domain\Entity\User implements UserInterface
+class User implements UserInterface, \App\Domain\Entity\User
 {
+    protected $id;
+
+    protected $email;
+
+    protected $password;
+
+    protected $createdAt;
+
+    public function __construct(UuidInterface $id, Email $email, Password $password)
+    {
+        $this->id = $id;
+        $this->email = $email;
+        $this->password = $password;
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
     public function getRoles(): array
     {
         return [];
