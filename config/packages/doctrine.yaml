@@ -25,9 +25,15 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         mappings:
-            App:
+            Domain:
                 is_bundle: false
                 type: php
-                dir: '%kernel.project_dir%/src/Infrastructure/Entity'
+                dir: '%kernel.project_dir%/src/Infrastructure/Doctrine'
                 prefix: 'App\Domain\Entity'
-                alias: App
+                alias: Domain
+            Infrastructure:
+                is_bundle: false
+                type: php
+                dir: '%kernel.project_dir%/src/Infrastructure/Doctrine'
+                prefix: 'App\Infrastructure\Entity'
+                alias: Infrastructure

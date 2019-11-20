@@ -2,5 +2,9 @@ root:
     path: /
     controller: App\Infrastructure\Controller\RootAction::handle
 
+login_check:
+    path: /api/login_check
+    controller: App\Infrastructure\Controller\LoginAction::handle
+
 recipes:
     resource: routes/recipes.yml

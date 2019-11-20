@@ -26,6 +26,6 @@ class Password extends StringType
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return new \App\Domain\Value\User\Password($value);
+        return \App\Domain\Value\User\Password::fromHash($value);
     }
 }

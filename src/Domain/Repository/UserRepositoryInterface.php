@@ -11,4 +11,6 @@ interface UserRepositoryInterface
     public function createUser(string $email, string $password): User;
 
     public function save(User $user): void;
+
+    public function getByEmail(string $email): User;
 }

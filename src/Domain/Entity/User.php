@@ -8,15 +8,15 @@ use App\Domain\Value\User\Email;
 use App\Domain\Value\User\Password;
 use Ramsey\Uuid\UuidInterface;
 
-class User
+abstract class User
 {
-    private $id;
+    protected $id;
 
-    private $email;
+    protected $email;
 
-    private $password;
+    protected $password;
 
-    private $createdAt;
+    protected $createdAt;
 
     public function __construct(UuidInterface $id, Email $email, Password $password)
     {
