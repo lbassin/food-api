@@ -19,7 +19,8 @@
         "symfony/serializer": "4.3.*",
         "symfony/var-dumper": "4.3.*",
         "symfony/yaml": "4.3.*",
-        "zircote/swagger-php": "^3.0"
+        "zircote/swagger-php": "^3.0",
+      "ext-json": "*"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.2",
