@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository;
 
+use App\Domain\Entity\Calendar;
 use App\Domain\Entity\Day;
 use App\Domain\Repository\DayRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 class DayRepository implements DayRepositoryInterface
 {
@@ -18,5 +21,27 @@ class DayRepository implements DayRepositoryInterface
     {
         $this->entityManager = $entityManager;
         $this->repository = $entityManager->getRepository(Day::class);
+    }
+
+    public function createAndSaveAllDaysForCalendar(Calendar $calendar): void
+    {
+        foreach (range(0, 6) as $index) {
+            $day = new Day(
+                $this->nextIdentity(),
+                $calendar,
+                $index
+            );
+
+            $this->entityManager->persist($day);
+        }
+
+        $this->entityManager->flush();
+
+        $this->entityManager->refresh($calendar);
+    }
+
+    private function nextIdentity(): UuidInterface
+    {
+        return Uuid::uuid4();
     }
 }

@@ -21,6 +21,10 @@ class Portion extends IntegerType
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
+        if (!$value) {
+            return null;
+        }
+
         return $value->getValue();
     }
 

@@ -27,13 +27,13 @@ $builder
 
 $builder
     ->createManyToOne('recipe', \App\Domain\Entity\Recipe::class)
-    ->addJoinColumn('recipe_id', 'id', false)
+    ->addJoinColumn('recipe_id', 'id', true)
     ->build();
 
 $builder
     ->createField('portion', \App\Infrastructure\DBAL\Value\Portion::NAME)
     ->length(1)
-    ->nullable(false)
+    ->nullable(true)
     ->build();
 
 $builder->addUniqueConstraint(['day_id', 'position'], 'MEAL_DAY_POSITION_UNIQUE');
