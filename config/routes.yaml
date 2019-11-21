@@ -8,3 +8,6 @@ login_check:
 
 recipes:
     resource: routes/recipes.yml
+
+users:
+    resource: routes/users.yml

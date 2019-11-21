@@ -1,0 +1,3 @@
+user_create:
+    path: /users
+    controller: App\Infrastructure\Controller\Users\CreateAction::handle

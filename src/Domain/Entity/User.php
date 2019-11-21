@@ -25,4 +25,9 @@ abstract class User
         $this->password = $password;
         $this->createdAt = new \DateTimeImmutable();
     }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
 }
