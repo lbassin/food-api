@@ -10,6 +10,8 @@ doctrine:
 
         url: '%env(resolve:DATABASE_URL)%'
 
+        logging: true
+
         types:
             recipe_name: App\Infrastructure\DBAL\Value\RecipeName
             portion: App\Infrastructure\DBAL\Value\Portion
