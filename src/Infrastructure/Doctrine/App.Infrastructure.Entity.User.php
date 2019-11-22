@@ -19,6 +19,7 @@ $builder
     ->createField('email', \App\Infrastructure\DBAL\Value\User\Email::NAME)
     ->length(255)
     ->nullable(false)
+    ->unique(true)
     ->build();
 
 $builder

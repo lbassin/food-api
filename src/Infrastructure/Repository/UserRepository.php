@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Infrastructure\Repository;
 
 use App\Domain\Entity\User;
+use App\Domain\Exception\UserAlreadyExistsException;
 use App\Domain\Exception\UserNotFoundException;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\Value\User\Email;
 use App\Domain\Value\User\Password;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -35,8 +37,16 @@ class UserRepository implements UserRepositoryInterface
 
     public function save(User $user): void
     {
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        try {
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        } catch (\Throwable $exception) {
+            if ($exception instanceof UniqueConstraintViolationException) {
+                throw new UserAlreadyExistsException($user->getEmail()->getValue(), $exception);
+            }
+            
+            throw $exception;
+        }
     }
 
     public function getByEmail(string $email): User

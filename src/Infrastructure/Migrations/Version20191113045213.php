@@ -40,6 +40,7 @@ final class Version20191113045213 extends AbstractMigration
         $this->addSql('ALTER TABLE meal ADD CONSTRAINT FK_9EF68E9C59D8A214 FOREIGN KEY (recipe_id) REFERENCES recipe (id)');
         $this->addSql('ALTER TABLE calendar ADD CONSTRAINT FK_6EA9A146A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE day ADD CONSTRAINT FK_E5A02990A40A2C8 FOREIGN KEY (calendar_id) REFERENCES calendar (id)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON user (email)');
     }
 
     /**
@@ -52,6 +53,7 @@ final class Version20191113045213 extends AbstractMigration
             'Migration can only be executed safely on \'mysql\'.'
         );
 
+        $this->addSql('DROP INDEX UNIQ_8D93D649E7927C74 ON user');
         $this->addSql('ALTER TABLE day DROP FOREIGN KEY FK_E5A02990A40A2C8');
         $this->addSql('ALTER TABLE meal DROP FOREIGN KEY FK_9EF68E9C9C24126');
         $this->addSql('DROP TABLE meal');

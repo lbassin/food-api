@@ -13,4 +13,6 @@ abstract class ExceptionTypes
     const DATA_PROVIDED_ERROR = 2;
 
     CONST DOMAIN = 3;
+
+    CONST APPLICATION = 4;
 }

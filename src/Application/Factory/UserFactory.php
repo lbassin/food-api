@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Factory;
 
-use App\Domain\DTO\UserDTO;
+use App\Application\DTO\UserDTO;
 use App\Domain\Entity\User;
 use App\Domain\Repository\UserRepositoryInterface;
 
@@ -19,11 +19,10 @@ class UserFactory
 
     public function createUser(UserDTO $dto): User
     {
-        // TODO: Dispatch event
+        $user = $this->userRepository->createUser($dto->getEmail(), $dto->getPassword());
+        $this->userRepository->save($user);
 
-        $user = $this->userRepository->createUser($dto->email, $dto->password);
-
-        // TODO: Dispatch event
+        // TODO: Dispatch event (user_created)
 
         return $user;
     }

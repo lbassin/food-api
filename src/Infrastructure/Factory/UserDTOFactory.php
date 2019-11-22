@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Factory;
 
-use App\Domain\DTO\UserDTO;
+use App\Application\DTO\UserDTO;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserDTOFactory
@@ -13,8 +13,8 @@ class UserDTOFactory
     {
         $dto = new UserDTO();
 
-        $dto->email = $request->request->get('username');
-        $dto->password = $request->request->get('password');
+        $dto->setEmail($request->request->get('username'));
+        $dto->setPassword($request->request->get('password'));
 
         return $dto;
     }
