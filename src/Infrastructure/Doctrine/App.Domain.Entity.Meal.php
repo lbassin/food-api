@@ -17,6 +17,7 @@ $builder
 $builder
     ->createManyToOne('day', \App\Domain\Entity\Day::class)
     ->addJoinColumn('day_id', 'id', false, false, 'CASCADE')
+    ->inversedBy('meals')
     ->build();
 
 $builder
