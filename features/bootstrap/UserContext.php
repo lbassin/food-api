@@ -9,6 +9,7 @@ use Behatch\HttpCall\Request;
 use Behatch\Json\Json;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Ramsey\Uuid\Uuid;
 
 class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
@@ -22,11 +23,18 @@ class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
 
     private $jwtEncoder;
 
-    public function __construct(Request $request, EntityManagerInterface $entityManager, JWTEncoderInterface $jwtEncoder)
-    {
+    private $tokenManager;
+
+    public function __construct(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        JWTEncoderInterface $jwtEncoder,
+        JWTTokenManagerInterface $tokenManager
+    ) {
         $this->request = $request;
         $this->entityManager = $entityManager;
         $this->jwtEncoder = $jwtEncoder;
+        $this->tokenManager = $tokenManager;
     }
 
     /**

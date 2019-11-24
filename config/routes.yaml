@@ -13,3 +13,7 @@ recipes:
 users:
     resource: routes/users.yml
     prefix: /api/
+
+profile:
+    resource: routes/profile.yml
+    prefix: /api/

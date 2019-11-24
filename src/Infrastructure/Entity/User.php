@@ -10,7 +10,7 @@ class User extends \App\Domain\Entity\User implements UserInterface
 {
     public function getRoles(): array
     {
-        return [];
+        return ['ROLE_USER'];
     }
 
     public function getPassword(): string

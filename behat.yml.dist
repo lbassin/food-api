@@ -3,13 +3,18 @@ default:
         default:
             contexts:
                 - behatch:context:json
-                - behatch:context:rest
+                -   Behatch\Context\RestContext: ~
                 -   Behat\MinkExtension\Context\MinkContext: ~
                 -   FeatureContext:
                         kernel: '@kernel'
                 -   UserContext:
                         entityManager: '@doctrine.orm.default_entity_manager'
                         jwtEncoder: '@lexik_jwt_authentication.encoder.lcobucci'
+                        tokenManager: '@lexik_jwt_authentication.jwt_manager'
+                -   ProfileContext: ~
+                -   AuthContext:
+                        entityManager: '@doctrine.orm.default_entity_manager'
+                        tokenManager: '@lexik_jwt_authentication.jwt_manager'
 
     extensions:
         Behat\Symfony2Extension:

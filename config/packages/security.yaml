@@ -31,4 +31,4 @@ security:
 
     access_control:
         - { path: ^/api/users, methods: POST, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/api/profile, roles: ROLE_USER }
