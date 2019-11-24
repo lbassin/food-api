@@ -9,6 +9,7 @@ default:
                         kernel: '@kernel'
                 -   UserContext:
                         entityManager: '@doctrine.orm.default_entity_manager'
+                        jwtEncoder: '@lexik_jwt_authentication.encoder.lcobucci'
 
     extensions:
         Behat\Symfony2Extension:

@@ -2,8 +2,8 @@ root:
     path: /
     controller: App\Infrastructure\Controller\RootAction::handle
 
-login_check:
-    path: /api/login_check
+login:
+    path: /api/login
     controller: App\Infrastructure\Controller\LoginAction::handle
 
 recipes:

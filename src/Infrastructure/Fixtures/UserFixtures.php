@@ -34,7 +34,7 @@ class UserFixtures extends Fixture
     {
         $users = [
             ['email' => 'john@doe.com', 'password' => 's3cr3t'],
-            ['email' => 'dev@user.com', 'password' => 'dev'],
+            ['email' => 'dev@user.com', 'password' => 'dev-password'],
         ];
 
         foreach ($users as $user) {

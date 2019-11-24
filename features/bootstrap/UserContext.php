@@ -3,8 +3,13 @@
 declare(strict_types=1);
 
 use App\Domain\Value\User\Email;
+use App\Domain\Value\User\Password;
 use App\Infrastructure\Entity\User;
 use Behatch\HttpCall\Request;
+use Behatch\Json\Json;
+use Doctrine\ORM\EntityManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
+use Ramsey\Uuid\Uuid;
 
 class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
 {
@@ -15,10 +20,13 @@ class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
 
     private $entityManager;
 
-    public function __construct(Request $request, \Doctrine\ORM\EntityManagerInterface $entityManager)
+    private $jwtEncoder;
+
+    public function __construct(Request $request, EntityManagerInterface $entityManager, JWTEncoderInterface $jwtEncoder)
     {
         $this->request = $request;
         $this->entityManager = $entityManager;
+        $this->jwtEncoder = $jwtEncoder;
     }
 
     /**
@@ -65,5 +73,44 @@ class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
         if (count($days) !== $numberOfdays) {
             throw new Exception(sprintf('User has %d days, %d expected', count($days), $numberOfdays));
         }
+    }
+
+    /**
+     * @Given /^there is a user with email "(\S*)" and password "(\S*)"$/
+     */
+    public function thereIsAUserWithEmailAndPassword(string $email, string $password): void
+    {
+        $this->thereIsNoUserWithEmail($email);
+
+        $user = new User(Uuid::uuid4(), new Email($email), Password::fromRawString($password));
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
+
+    /**
+     * @When /^I send a login request with data$/
+     */
+    public function iSendALoginRequestWithData(\Behat\Gherkin\Node\TableNode $args)
+    {
+        $data = json_encode($args->getRowsHash());
+
+        $this->request->setHttpHeader('content-type', 'application/json');
+
+        return $this->request->send("POST", $this->locatePath('/api/login'), [], [], $data);
+    }
+
+    /**
+     * @Given /^the response should contain a valid token$/
+     */
+    public function theResponseShouldContainAValidToken()
+    {
+        $data = (array) (new Json($this->getMink()->getSession()->getPage()->getContent()))->getContent();
+
+        if (empty($data['token'])) {
+            throw new Exception('Response does not contain a token');
+        }
+
+        $this->jwtEncoder->decode($data['token']);
     }
 }
