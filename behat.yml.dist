@@ -2,7 +2,7 @@ default:
     suites:
         default:
             contexts:
-                - behatch:context:json
+                -   Behatch\Context\JsonContext: ~
                 -   Behatch\Context\RestContext: ~
                 -   Behat\MinkExtension\Context\MinkContext: ~
                 -   FeatureContext:
@@ -11,6 +11,7 @@ default:
                         entityManager: '@doctrine.orm.default_entity_manager'
                         jwtEncoder: '@lexik_jwt_authentication.encoder.lcobucci'
                         tokenManager: '@lexik_jwt_authentication.jwt_manager'
+                        userFactory: '@App\Application\Factory\UserFactory'
                 -   ProfileContext: ~
                 -   AuthContext:
                         entityManager: '@doctrine.orm.default_entity_manager'

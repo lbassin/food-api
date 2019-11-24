@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use App\Domain\Value\Portion;
 use Ramsey\Uuid\UuidInterface;
 
 class Meal
@@ -25,5 +26,20 @@ class Meal
         $this->position = $position;
         $this->recipe = null;
         $this->portion = null;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+
+    public function getPortion(): ?Portion
+    {
+        return $this->portion;
     }
 }

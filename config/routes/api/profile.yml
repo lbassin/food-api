@@ -2,3 +2,8 @@ profile_read:
     path: /profile
     methods: GET
     controller: App\Infrastructure\Controller\Profile\ReadAction::handle
+
+profile_calendar_read:
+    path: /profile/calendar
+    methods: GET
+    controller: App\Infrastructure\Controller\Profile\Calendar\ReadAction::handle

@@ -30,6 +30,10 @@ class Portion extends IntegerType
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
+        if (!$value) {
+            return null;
+        }
+
         return new \App\Domain\Value\Portion((int) $value);
     }
 }

@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
+use App\Application\Factory\UserFactory;
 use App\Domain\Value\User\Email;
-use App\Domain\Value\User\Password;
 use App\Infrastructure\Entity\User;
 use Behatch\HttpCall\Request;
 use Behatch\Json\Json;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Ramsey\Uuid\Uuid;
 
 class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
 {
@@ -25,16 +24,20 @@ class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
 
     private $tokenManager;
 
+    private $userFactory;
+
     public function __construct(
         Request $request,
         EntityManagerInterface $entityManager,
         JWTEncoderInterface $jwtEncoder,
-        JWTTokenManagerInterface $tokenManager
+        JWTTokenManagerInterface $tokenManager,
+        UserFactory $userFactory
     ) {
         $this->request = $request;
         $this->entityManager = $entityManager;
         $this->jwtEncoder = $jwtEncoder;
         $this->tokenManager = $tokenManager;
+        $this->userFactory = $userFactory;
     }
 
     /**
@@ -90,10 +93,8 @@ class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
     {
         $this->thereIsNoUserWithEmail($email);
 
-        $user = new User(Uuid::uuid4(), new Email($email), Password::fromRawString($password));
-
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $dto = (new App\Application\DTO\UserDTO())->setEmail($email)->setPassword($password);
+        $this->userFactory->createUser($dto);
     }
 
     /**

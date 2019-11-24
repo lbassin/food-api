@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\UuidInterface;
 
 class Day
@@ -14,6 +15,7 @@ class Day
 
     private $position;
 
+    /** @var ArrayCollection */
     private $meals;
 
     public function __construct(UuidInterface $id, Calendar $calendar, int $position)
@@ -21,5 +23,15 @@ class Day
         $this->id = $id;
         $this->calendar = $calendar;
         $this->position = $position;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    public function getMeals(): array
+    {
+        return $this->meals->toArray();
     }
 }

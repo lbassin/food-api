@@ -10,14 +10,18 @@ class UserDTO
 
     private $password;
 
-    public function setEmail(string $email): void
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
     }
 
-    public function setPassword(string $password): void
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 
     public function getEmail(): string
