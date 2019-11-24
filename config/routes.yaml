@@ -6,14 +6,6 @@ login:
     path: /api/login
     controller: App\Infrastructure\Controller\LoginAction::handle
 
-recipes:
-    resource: routes/recipes.yml
-    prefix: /api/
-
-users:
-    resource: routes/users.yml
-    prefix: /api/
-
-profile:
-    resource: routes/profile.yml
+api:
+    resource: routes/api.yml
     prefix: /api/

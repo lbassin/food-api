@@ -1,0 +1,8 @@
+recipes:
+    resource: api/recipes.yml
+
+users:
+    resource: api/users.yml
+
+profile:
+    resource: api/profile.yml

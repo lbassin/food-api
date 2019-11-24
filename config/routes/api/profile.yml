@@ -1,4 +1,4 @@
 profile_read:
     path: /profile
-    controller: App\Infrastructure\Controller\Profile\ReadAction::handle
     methods: GET
+    controller: App\Infrastructure\Controller\Profile\ReadAction::handle

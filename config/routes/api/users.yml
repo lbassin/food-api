@@ -1,0 +1,4 @@
+user_create:
+    path: /users
+    methods: POST
+    controller: App\Infrastructure\Controller\Users\CreateAction::handle
