@@ -5,14 +5,11 @@ default:
                 -   Behatch\Context\JsonContext: ~
                 -   Behatch\Context\RestContext: ~
                 -   Behat\MinkExtension\Context\MinkContext: ~
-                -   FeatureContext:
-                        kernel: '@kernel'
                 -   UserContext:
                         entityManager: '@doctrine.orm.default_entity_manager'
                         jwtEncoder: '@lexik_jwt_authentication.encoder.lcobucci'
                         tokenManager: '@lexik_jwt_authentication.jwt_manager'
                         userFactory: '@App\Application\Factory\UserFactory'
-                -   ProfileContext: ~
                 -   AuthContext:
                         entityManager: '@doctrine.orm.default_entity_manager'
                         tokenManager: '@lexik_jwt_authentication.jwt_manager'

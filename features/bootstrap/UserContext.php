@@ -58,18 +58,6 @@ class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
     }
 
     /**
-     * @When /^I send a new user request with data$/
-     */
-    public function iSendANewUserRequestWithData(\Behat\Gherkin\Node\TableNode $body)
-    {
-        $data = json_encode($body->getRowsHash());
-
-        $this->request->setHttpHeader('content-type', 'application/json');
-
-        return $this->request->send("POST", $this->locatePath('/api/users'), [], [], $data);
-    }
-
-    /**
      * @Given /^the user "(\S+)" should have a calendar with (\d+) days$/
      */
     public function aUserShouldHaveACalendarWithDays(string $email, int $numberOfdays)
@@ -95,18 +83,6 @@ class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
 
         $dto = (new App\Application\DTO\UserDTO())->setEmail($email)->setPassword($password);
         $this->userFactory->createUser($dto);
-    }
-
-    /**
-     * @When /^I send a login request with data$/
-     */
-    public function iSendALoginRequestWithData(\Behat\Gherkin\Node\TableNode $args)
-    {
-        $data = json_encode($args->getRowsHash());
-
-        $this->request->setHttpHeader('content-type', 'application/json');
-
-        return $this->request->send("POST", $this->locatePath('/api/login'), [], [], $data);
     }
 
     /**
