@@ -28,8 +28,13 @@ abstract class User
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    public function getEmail()
+    public function getEmail(): Email
     {
         return $this->email;
+    }
+
+    public function getCalendar(): Calendar
+    {
+        return $this->calendar;
     }
 }

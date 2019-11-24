@@ -31,6 +31,7 @@ $builder
 $builder
     ->createOneToOne('calendar', \App\Domain\Entity\Calendar::class)
     ->addJoinColumn('calendar_id', 'id', true, true, 'CASCADE')
+    ->mappedBy('user')
     ->build();
 
 $builder

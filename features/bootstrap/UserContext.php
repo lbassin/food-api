@@ -22,7 +22,7 @@ class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
     }
 
     /**
-     * @Given there is no user with email :email
+     * @Given /^there is no user with email "(\S*)"$/
      */
     public function thereIsNoUserWithEmail(string $email): void
     {
@@ -39,7 +39,7 @@ class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
     }
 
     /**
-     * @When I send a new user request with data
+     * @When /^I send a new user request with data$/
      */
     public function iSendANewUserRequestWithData(\Behat\Gherkin\Node\TableNode $body)
     {
@@ -48,5 +48,22 @@ class UserContext extends \Behat\MinkExtension\Context\RawMinkContext
         $this->request->setHttpHeader('content-type', 'application/json');
 
         return $this->request->send("POST", $this->locatePath('/api/users'), [], [], $data);
+    }
+
+    /**
+     * @Given /^the user "(\S+)" should have a calendar with (\d+) days$/
+     */
+    public function aUserShouldHaveACalendarWithDays(string $email, int $numberOfdays)
+    {
+        /** @var \App\Domain\Entity\User $user */
+        $user = $this->entityManager
+            ->getRepository(User::class)
+            ->findOneBy(['email' => new Email($email)]);
+
+        $days = $user->getCalendar()->getDays();
+
+        if (count($days) !== $numberOfdays) {
+            throw new Exception(sprintf('User has %d days, %d expected', count($days), $numberOfdays));
+        }
     }
 }

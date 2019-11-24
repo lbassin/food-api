@@ -25,3 +25,11 @@ Feature:
     When I send a new user request with data
       | test | 42 |
     Then the response status code should be 400
+
+  Scenario: An account has his calendar initialized once he has been created
+    Given there is no user with email "john@doe.com"
+    When I send a new user request with data
+      | username | john@doe.com |
+      | password | s3cr3t       |
+    Then the response status code should be 201
+    And the user "john@doe.com" should have a calendar with 7 days

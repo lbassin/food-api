@@ -19,7 +19,7 @@ class LoginAction
 
     public function handle(Request $request): Response
     {
-        // Fallback to JWT controller is content-type header is missing
+        // Fallback to JWT controller if content-type header is missing
         $request->headers->set('content-type', 'application/json');
 
         return $this->kernel->handle($request);
