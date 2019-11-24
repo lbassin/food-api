@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Value\User;
 
+use App\Domain\Exception\User\PasswordTooShortException;
 use App\Domain\Exception\Value\RawPasswordNotAvailableException;
 use App\Domain\Exception\Value\RawPasswordShouldHaveNoHashProvidedException;
 
@@ -29,14 +30,28 @@ class Password
         }
 
         if (empty($hash)) {
-            $this->raw = $raw;
-            $this->hashed = password_hash($this->raw, PASSWORD_BCRYPT);
-
+            $this->initFromRaw($raw);
         }
 
         if (empty($raw)) {
-            $this->hashed = $hash;
+            $this->initFromHash($hash);
         }
+    }
+
+    private function initFromRaw(string $raw): void
+    {
+        $this->raw = $raw;
+
+        if (strlen($raw) < 6) {
+            throw new PasswordTooShortException();
+        }
+
+        $this->hashed = password_hash($this->raw, PASSWORD_BCRYPT);
+    }
+
+    private function initFromHash(string $hash): void
+    {
+        $this->hashed = $hash;
     }
 
     public function getRawValue(): string

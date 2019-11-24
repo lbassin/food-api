@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Infrastructure\Subscribers;
 
 use App\Domain\Exception\ExceptionTypes;
+use App\Domain\Exception\User\PasswordTooShortException;
+use App\Domain\Exception\UserAlreadyExistsException;
+use App\Infrastructure\Exception\MissingDataForDTOException;
 use Doctrine\DBAL\DBALException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,6 +19,13 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class ExceptionSubscriber implements EventSubscriberInterface
 {
     private $applicationEnvName;
+
+    private $exceptionToResponseCodeMapping = [
+        UserAlreadyExistsException::class => Response::HTTP_CONFLICT,
+        PasswordTooShortException::class => Response::HTTP_BAD_REQUEST,
+        MissingDataForDTOException::class => Response::HTTP_BAD_REQUEST,
+        NotFoundHttpException::class => Response::HTTP_NOT_FOUND,
+    ];
 
     public function __construct(string $applicationEnvName)
     {
@@ -52,8 +62,8 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     private function getResponseCode(\Throwable $exception): int
     {
-        if ($exception instanceof NotFoundHttpException) {
-            return Response::HTTP_NOT_FOUND;
+        if (!empty($this->exceptionToResponseCodeMapping[get_class($exception)])) {
+            return $this->exceptionToResponseCodeMapping[get_class($exception)];
         }
 
         $mapping = [

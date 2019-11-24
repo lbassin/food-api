@@ -15,3 +15,13 @@ Feature:
       | username | john@doe.com |
       | password | s3cr3t       |
     Then the response status code should be 409
+
+  Scenario: Create an account with a password too short
+    When I send a new user request with data
+      | username | john+test@doe.com |
+      | password | test              |
+
+  Scenario: Mandatory fields are not provided for user creation
+    When I send a new user request with data
+      | test | 42 |
+    Then the response status code should be 400
