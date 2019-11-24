@@ -36,4 +36,9 @@ class Portion extends IntegerType
 
         return new \App\Domain\Value\Portion((int) $value);
     }
+
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
+    {
+        return true;
+    }
 }

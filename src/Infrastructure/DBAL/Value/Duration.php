@@ -28,4 +28,9 @@ class Duration extends IntegerType
     {
         return new \App\Domain\Value\Duration((int) $value);
     }
+
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
+    {
+        return true;
+    }
 }

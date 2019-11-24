@@ -20,4 +20,9 @@ class RecipeName extends StringType
     {
         return new \App\Domain\Value\RecipeName($value);
     }
+
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
+    {
+        return true;
+    }
 }

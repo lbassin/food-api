@@ -28,4 +28,9 @@ class Complexity extends IntegerType
     {
         return new \App\Domain\Value\Complexity((int) $value);
     }
+
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
+    {
+        return true;
+    }
 }

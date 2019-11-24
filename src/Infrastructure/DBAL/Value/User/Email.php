@@ -28,4 +28,9 @@ class Email extends StringType
     {
         return new \App\Domain\Value\User\Email($value);
     }
+
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
+    {
+        return true;
+    }
 }

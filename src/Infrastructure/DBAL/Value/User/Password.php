@@ -28,4 +28,9 @@ class Password extends StringType
     {
         return \App\Domain\Value\User\Password::fromHash($value);
     }
+
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
+    {
+        return true;
+    }
 }
