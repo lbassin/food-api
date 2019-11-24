@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Controller\Users;
 
 use App\Application\Factory\UserFactory;
+use App\Domain\Exception\UserAlreadyExistsException;
 use App\Infrastructure\Factory\UserDTOFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,10 +28,15 @@ class CreateAction
     public function handle(Request $request): Response
     {
         $dto = $this->dtoFactory->createFromRequest($request);
-        $user = $this->userFactory->createUser($dto);
+
+        try {
+            $user = $this->userFactory->createUser($dto);
+        } catch (UserAlreadyExistsException $exception) {
+            return new JsonResponse(null, Response::HTTP_CONFLICT);
+        }
 
         $response = $this->serializer->serialize($user, 'json');
 
-        return new JsonResponse($response, Response::HTTP_OK, [], true);
+        return new JsonResponse($response, Response::HTTP_CREATED, [], true);
     }
 }

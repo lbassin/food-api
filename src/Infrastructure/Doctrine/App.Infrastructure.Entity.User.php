@@ -29,6 +29,11 @@ $builder
     ->build();
 
 $builder
+    ->createOneToOne('calendar', \App\Domain\Entity\Calendar::class)
+    ->addJoinColumn('calendar_id', 'id', true, true, 'CASCADE')
+    ->build();
+
+$builder
     ->createField('createdAt', Types::DATE_IMMUTABLE)
     ->columnName('created_at')
     ->nullable(false)

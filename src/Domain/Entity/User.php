@@ -16,6 +16,8 @@ abstract class User
 
     protected $password;
 
+    protected $calendar;
+
     protected $createdAt;
 
     public function __construct(UuidInterface $id, Email $email, Password $password)

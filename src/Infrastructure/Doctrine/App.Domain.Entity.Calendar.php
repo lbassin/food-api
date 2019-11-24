@@ -16,7 +16,7 @@ $builder
 
 $builder
     ->createOneToOne('user', \App\Infrastructure\Entity\User::class)
-    ->addJoinColumn('user_id', 'id', false)
+    ->addJoinColumn('user_id', 'id', false, true, 'CASCADE')
     ->build();
 
 $builder

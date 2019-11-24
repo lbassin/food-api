@@ -16,7 +16,7 @@ $builder
 
 $builder
     ->createManyToOne('day', \App\Domain\Entity\Day::class)
-    ->addJoinColumn('day_id', 'id', false)
+    ->addJoinColumn('day_id', 'id', false, false, 'CASCADE')
     ->build();
 
 $builder

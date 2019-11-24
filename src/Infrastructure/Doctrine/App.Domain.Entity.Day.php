@@ -17,7 +17,7 @@ $builder
 $builder
     ->createManyToOne('calendar', \App\Domain\Entity\Calendar::class)
     ->inversedBy('days')
-    ->addJoinColumn('calendar_id', 'id', false)
+    ->addJoinColumn('calendar_id', 'id', false, false, 'CASCADE')
     ->build();
 
 $builder
