@@ -6,6 +6,7 @@ namespace App\Infrastructure\Repository;
 
 use App\Domain\Entity\Day;
 use App\Domain\Entity\Meal;
+use App\Domain\Exception\MealNotFoundException;
 use App\Domain\Repository\MealRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
@@ -37,6 +38,22 @@ class MealRepository implements MealRepositoryInterface
 
         $this->entityManager->flush();
     }
+
+    public function getOneByDayAndPosition(Day $day, int $position): Meal
+    {
+        /** @var Meal $meal */
+        $meal = $this->repository->findOneBy([
+            'day' => $day,
+            'position' => $position,
+        ]);
+
+        if (!$meal) {
+            throw new MealNotFoundException($day->getId(), $position);
+        }
+
+        return $meal;
+    }
+
 
     private function nextIdentity(): UuidInterface
     {

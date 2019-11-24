@@ -25,6 +25,11 @@ class Day
         $this->position = $position;
     }
 
+    public function getId(): UuidInterface
+    {
+        return $this->id;
+    }
+
     public function getPosition(): int
     {
         return $this->position;

@@ -7,3 +7,14 @@ profile_calendar_read:
     path: /profile/calendar
     methods: GET
     controller: App\Infrastructure\Controller\Profile\Calendar\ReadAction::handle
+
+profile_calendar_day_read:
+    path: /profile/calendar/days/{dayPosition<\d>}
+    methods: GET
+    controller: App\Infrastructure\Controller\Profile\Calendar\Days\ReadAction::handle
+
+profile_calendar_day_meal_read:
+    path: /profile/calendar/days/{dayPosition<\d>}/meals/{mealPosition<\d>}
+    methods: GET
+    controller: App\Infrastructure\Controller\Profile\Calendar\Days\Meals\ReadAction::handle
+

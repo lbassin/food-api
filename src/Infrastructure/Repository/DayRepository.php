@@ -6,6 +6,8 @@ namespace App\Infrastructure\Repository;
 
 use App\Domain\Entity\Calendar;
 use App\Domain\Entity\Day;
+use App\Domain\Entity\User;
+use App\Domain\Exception\DayNotFoundException;
 use App\Domain\Repository\DayRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
@@ -38,6 +40,21 @@ class DayRepository implements DayRepositoryInterface
         $this->entityManager->flush();
 
         $this->entityManager->refresh($calendar);
+    }
+
+    public function getOneByUserAndPosition(User $user, int $position): Day
+    {
+        /** @var Day $day */
+        $day = $this->repository->findOneBy([
+            'calendar' => $user->getCalendar(),
+            'position' => $position,
+        ]);
+
+        if (!$day) {
+            throw new DayNotFoundException($user->getCalendar()->getId(), $position);
+        }
+
+        return $day;
     }
 
     private function nextIdentity(): UuidInterface
